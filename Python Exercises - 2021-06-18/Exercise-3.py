@@ -5,7 +5,7 @@ Program to Print all Prime Numbers in an Interval of 5 seconds
 import time
 
 
-class Timer(object):
+class Solution(object):
     def prime(self):
         print("Starting to Print all Prime Number for 5 second")
         time.sleep(1)
@@ -24,4 +24,4 @@ class Timer(object):
                 return
             
 
-Timer().prime()
+Solution().prime()

@@ -10,12 +10,16 @@ class Solution(object):
         self.__dict = None
     
     def open(self,dir:str):
-        with open(dir,'r') as f:
-            columns = str(f.readline()).strip().split(',')
-            self.__dict = {i:[] for i in columns}
-            for line in f.readlines():
-                for i,j in enumerate(line.strip().split(',')):
-                    self.__dict[columns[i]].append(j)
+        try:
+            with open(dir,'r') as f:
+                columns = str(f.readline()).strip().split(',')
+                self.__dict = {i:[] for i in columns}
+                for line in f.readlines():
+                    for i,j in enumerate(line.strip().split(',')):
+                        self.__dict[columns[i]].append(j)
+        except Exception as e:
+            print(e)
+            
     def get_dict_list(self):
         return self.__dict
 

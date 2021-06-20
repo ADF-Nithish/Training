@@ -17,9 +17,9 @@ class Application(object):
     def __repr__(self) -> str:
         return self.__class__.__name__+"("+self.__getvalue()+")"
     
-
-app = Application(*sys.argv[1:])
-print(app)
+if __name__ == "__main__":
+    app = Application(*sys.argv[1:])
+    print(app)
 
 """
 Command Line Arguement:

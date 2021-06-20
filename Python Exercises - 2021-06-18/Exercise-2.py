@@ -19,13 +19,13 @@ class Solution(object):
     def get_dict_list(self):
         return self.__dict
 
+if __name__ == "__main__":
+    filename = sys.argv[1]
+    dir = os.path.join(os.getcwd(),filename)
 
-filename = sys.argv[1]
-dir = os.path.join(os.getcwd(),filename)
-
-s = Solution()
-s.open(dir)
-print(s.get_dict_list())
+    s = Solution()
+    s.open(dir)
+    print(s.get_dict_list())
 
 
 """

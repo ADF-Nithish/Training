@@ -18,11 +18,11 @@ class Solution(object):
         while second:
             first, second = second, first % second
         return first
+if __name__ == "__main__":
+    iterables = map(int,sys.argv[1:])
 
-iterables = map(int,sys.argv[1:])
-
-s = Solution(*iterables)
-print(s.gcd)
+    s = Solution(*iterables)
+    print(s.gcd)
 
 """
 Command Line Arguement:

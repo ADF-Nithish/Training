@@ -23,5 +23,5 @@ class Solution(object):
                 print("Time Limit Exceeded.........")
                 return
             
-
-Solution().prime()
+if __name__ == "__main__":
+    Solution().prime()

@@ -34,19 +34,19 @@ class Solution(object):
             for i in self.__list:
                 f.write(i+' '+str(len(i))+'\n')
 
-                
 
-filename = sys.argv[1]
-ans_filename = sys.argv[2]
+if __name__ == "__main__":
+    filename = sys.argv[1]
+    ans_filename = sys.argv[2]
 
-dir = os.path.join(os.getcwd(),filename)
-ans = os.path.join(os.getcwd(),ans_filename)
+    dir = os.path.join(os.getcwd(),filename)
+    ans = os.path.join(os.getcwd(),ans_filename)
 
-s = Solution()
-s.open(filename)
-s.unique()
-s.write(ans)
-print(s)
+    s = Solution()
+    s.open(filename)
+    s.unique()
+    s.write(ans)
+    print(s)
 
 
 """

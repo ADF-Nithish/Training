@@ -13,10 +13,17 @@ class Solution(object):
     def toHexadecimal(self):
         return f"HexaDecimal of {self.__decimal} - "+hex(self.__decimal)[2:]
 
+if __name__ == "__main__":
+    decimal = sys.argv[1]
 
-decimal = sys.argv[1]
+    s = Solution(decimal=int(decimal))
+    print(s.toBinary())
+    print(s.toOctal())
+    print(s.toHexadecimal())
 
-s = Solution(decimal=decimal)
-print(s.toBinary())
-print(s.toOctal())
-print(s.toHexadecimal())
+"""
+Command Line Arguement:
+    py Exercise-5.py <input>
+eg:
+    py Exercise-5.py 4
+"""

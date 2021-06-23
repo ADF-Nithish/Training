@@ -76,7 +76,7 @@ class Parser(object):
             print("No unique elements in the file")
     
     def word_dict(self):
-        self.__dict = {self.__counter[i]:self.__list.index(i) for i in self.__list }
+        self.__dict = {self.__list[i]:self.__list.index(i) for i in self.__list }
         print(f"word dict {self.__dict}")
 
     def __write_output(self,open_type,r):

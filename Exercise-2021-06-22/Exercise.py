@@ -18,7 +18,7 @@ class FileParser(object):
     def __init__(self) -> None:
         self.__input_dir = None
         self.__output_dir = None
-        self.__config_dir = os.path.join(os.getcwd(),'config')
+        self.__config_dir = os.path.join(os.getcwd(),'.config')
         self.__log = Logging()
         self.__list = list()
         self.__get_io_file()

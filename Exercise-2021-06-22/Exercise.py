@@ -5,6 +5,7 @@ import logging
 import getopt
 from typing import Counter
 
+
 class Logging(object):
     def __init__(self):
         self.__log_dir = os.path.join(os.getcwd(),"fileparser.log")

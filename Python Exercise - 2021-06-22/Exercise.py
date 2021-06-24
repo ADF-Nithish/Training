@@ -5,13 +5,23 @@ import logging
 import getopt
 from typing import Counter
 
+class Logging(object):
+    def __init__(self):
+        self.__log_dir = os.path.join(os.getcwd(),"fileparser.log")
+    def WriteLog(self,contents):
+        logging.basicConfig(filename=self.__log_dir,filemode='a+',format='%(asctime)s - %(message)s', level=logging.DEBUG)
+        logging.debug(contents)
+    
+
 class FileParser(object):
     def __init__(self) -> None:
         self.__input_dir = None
         self.__output_dir = None
         self.__config_dir = os.path.join(os.getcwd(),'config')
+        self.__log = Logging()
         self.__list = list()
         self.__get_io_file()
+        
     
     def __get_config(self):
         return self.__config_dir
@@ -24,14 +34,16 @@ class FileParser(object):
                 if len(lines) != 0:
                     self.__input_dir = lines[0].replace('\n','').split('=')[1]
                     self.__output_dir = lines[1].split('=')[1]
-        except Exception as e:
+            self.__log.WriteLog(f"{self.__config_dir} file opened and directories are read.")
+        except FileNotFoundError as e:
             print("Exception : ",e)
     
     def Open(self)->list:
         try:
             with open(self.__input_dir,"r") as f:
-                for i in f.read().lower().replace('\n','').split(' '):
+                for i in f.read().lower().replace('\n','; ').split(' '):
                     self.__list.append(str(i))
+            self.__log.WriteLog(f"{self.__input_dir} file opened and read all the contents into a list.")
             return self.__list
         except FileNotFoundError as e:
             print("Exception : ",e)
@@ -40,6 +52,7 @@ class FileParser(object):
         try:
             with open(self.__output_dir,opener) as f:
                 f.write(contents)
+            self.__log.WriteLog(f"{self.__output_dir} file opened and contents written.")
         except FileNotFoundError as e:
             print("Exception : ",e)
         
@@ -48,15 +61,18 @@ class WriteConfig(FileParser):
     def __init__(self) -> None:
         super().__init__()
         self.__config = super()._FileParser__get_config()
+        self.__log = Logging()
+
     def write(self):
         try:
-            opts, _ = getopt.getopt(sys.argv[1:],"hi:o:",["input=","output="])
+            opts, _ = getopt.getopt(sys.argv[1:],"i:o:",["input=","output="])
             with open(self.__config,"w+") as f:
                 for i,j in opts:
                     if i == '-i':
                         f.write(f"Input_file={j}\n")
                     elif i == '-o':
                         f.write(f"Output_file={j}")
+            self.__log.WriteLog(f"{self.__config} file opened and directories are set.")
         except getopt.GetoptError as e:
             print("GetOptError Exception : ",e)
             sys.exit()
@@ -71,6 +87,7 @@ class Operations(FileParser):
         self.__countTo = int()
         self.__countIng = int()
         self.__counter = Counter(self.__list)
+        self.__log = Logging()
 
     def printall(self):
         self.findTO()
@@ -84,6 +101,7 @@ class Operations(FileParser):
         self.capatilize_5_Word()
         self.change_blankspace()
         self.split_using_semicolon()
+        self.__log.WriteLog(f"Operations are done")
 
     def findTO(self):
         try:
@@ -186,9 +204,5 @@ w.write()
 o = Operations()
 assert isinstance(o,Operations)
 o.printall()
-
-
-
-
 
 

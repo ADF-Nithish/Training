@@ -1,5 +1,5 @@
-t n ght,t d y,t mm rr w,n tt ,n th ng,tr  n ng,fl pp ng,t n ght,
+t n ght,t d y,t mm rr w,n tt ,;,n th ng,tr  n ng,fl pp ng,t n ght,
 toNight toDay toMmorrow niTto noThing trAining flIpping toNight 
-tonight today tommorrow nitto nothing TRAINING flipping tonight 
+tonight today tommorrow nitto NOTHING training flipping tonight 
 tonight-today-tommorrow-nitto-nothing-training-flipping-tonight
-tonighttodaytommorrownittonothingtrainingflippingtonight
+tonighttodaytommorrownitto;nothingtrainingflippingtonight

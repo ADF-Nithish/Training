@@ -1,1 +1,6 @@
 .vscode/
+Exercise-2021-06-23/__pycache__/
+Exercise-2021-06-23/.pytest_cache/
+Exercise-2021-06-23/draft
+Exercise-2021-06-23/htmlcov/
+Exercise-2021-06-23/.coverage

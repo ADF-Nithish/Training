@@ -8,7 +8,6 @@ import logging
 import getopt
 from typing import Counter
 
-
 class Logging:
     """
     This class is used to write all the Logs to a file.
@@ -38,74 +37,20 @@ class Logging:
         logging.debug('%s',contents)
         self.finish()
 
-class FileParser:
-    """
-    FileParser used to read and write file.
-    """
-    def __init__(self) -> None:
-        self.__input_dir = None
-        self.__output_dir = None
-        self.__config_dir = os.path.join(os.getcwd(),'.config')
-        self.__log = Logging()
-        self.__list = list()
-        self.__get_io_file()
-
-    def get_config(self):
-        """
-        returns config directory.
-        """
-        return self.__config_dir
-
-    def __get_io_file(self):
-        """
-        returns list of words.
-        """
-        try:
-            with open(self.__config_dir,"r") as file:
-                lines = file.readlines()
-                if len(lines) != 0:
-                    self.__input_dir = lines[0].replace('\n','').split('=')[1]
-                    self.__output_dir = lines[1].split('=')[1]
-            self.__log.write_log("config file opened and directories are read.")
-        except FileNotFoundError as ex:
-            print("Exception : ",ex)
-
-    def open(self):
-        """
-        opens a file to read.
-        """
-        log_detail = "file opened and read all the contents into a list."
-        try:
-            with open(self.__input_dir,"r") as file:
-                for i in file.read().lower().replace('\n','; ').split(' '):
-                    self.__list.append(str(i))
-            self.__log.write_log(f"input {log_detail}")
-            return self.__list
-        except FileNotFoundError as ex:
-            print("Exception : ",ex)
-            return self.__list
-
-    def write(self,contents,opener):
-        """
-        writes a file.
-        """
-        try:
-            with open(self.__output_dir,opener) as file:
-                file.write(contents)
-            self.__log.write_log("output file opened and contents written.")
-        except FileNotFoundError as ex:
-            print("Exception : ",ex)
-
-
-class WriteConfig(FileParser):
+class WriteConfig(Logging):
     """
     Config file operations are done using this class
     """
     def __init__(self) -> None:
         super().__init__()
-        self.__config = super().get_config()
+        self.__config = os.path.join(os.getcwd(),'.config')
         self.__log = Logging()
 
+    def get_config(self):
+        """
+        return if config file.
+        """
+        return self.__config
     def write_config(self):
         """
         writes into config file.
@@ -119,11 +64,67 @@ class WriteConfig(FileParser):
                     elif i == '-o':
                         file.write(f"Output_file={j}")
             self.__log.write_log("config file opened and directories are set.")
-        except getopt.GetoptError as ex:
+        except getopt.GetoptError as ex:#pragma: no cover
             print("GetOptError Exception : ",ex)
             sys.exit()
-        except FileNotFoundError as ex:
+        except FileNotFoundError as ex:#pragma: no cover
             print("FileNotFoundError Exception : ",ex)
+
+class FileParser(WriteConfig):
+    """
+    FileParser used to read and write file.
+    """
+    def __init__(self) -> None:
+        super().__init__()
+        self.__config_dir = super().get_config()
+        self.__input_dir = str()
+        self.__output_dir = str()
+        self.__log = Logging()
+        self.__get_io_file()
+        self.__list = list()
+
+    def __get_io_file(self):
+        """
+        returns list of words.
+        """
+        try:
+            assert len(self.__input_dir) != 1
+            with open(self.__config_dir,"r") as file:
+                lines = file.readlines()
+                if len(lines) != 0:
+                    self.__input_dir = lines[0].replace('\n','').split('=')[1]
+                    self.__output_dir = lines[1].split('=')[1]
+            self.__log.write_log("config file opened and directories are read.")
+        except FileNotFoundError as ex:#pragma: no cover
+            print("Exception : ",ex)
+        except AssertionError as ex:#pragma: no cover
+            print("Exception : ",ex)
+
+    def open(self):
+        """
+        opens a file to read.
+        """
+        log_detail = "file opened and read all the contents into a list."
+        try:
+            with open(self.__input_dir,"r") as file:
+                for i in file.read().lower().replace('\n','; ').split(' '):
+                    self.__list.append(str(i))
+            self.__log.write_log(f"input {log_detail}")
+            return self.__list
+        except FileNotFoundError as ex:#pragma: no cover
+            print("Exception : ",ex)
+            return self.__list
+
+    def write(self,contents,opener):
+        """
+        writes a file.
+        """
+        try:
+            with open(self.__output_dir,opener) as file:
+                file.write(contents)
+            self.__log.write_log("output file opened and contents written.")
+        except FileNotFoundError as ex:#pragma: no cover
+            print("Exception : ",ex)
 
 class Operations(FileParser):
     """
@@ -137,7 +138,7 @@ class Operations(FileParser):
         self.__counter = Counter(self.__list)
         self.__log = Logging()
 
-    def printall(self):
+    def print_all(self):
         """
         prints all methods of operation class.
         """
@@ -153,6 +154,7 @@ class Operations(FileParser):
         self.change_blankspace()
         self.split_using_semicolon()
         self.__log.write_log("Operations are done")
+        return "Operations are done"
 
     def find_to(self):
         """
@@ -165,7 +167,7 @@ class Operations(FileParser):
                 if i.startswith("to"):
                     self.__count_to += 1
             print(f"{log_detail} {self.__count_to}")
-        except AssertionError:
+        except AssertionError:#pragma: no cover
             print('Passed an empty file')
 
     def find_ing(self):
@@ -178,7 +180,7 @@ class Operations(FileParser):
                 if i.endswith("ing"):
                     self.__count_ing +=1
             print(f"The number of words ending with \"ing\" in the input file = {self.__count_ing}")
-        except AssertionError:
+        except AssertionError:#pragma: no cover
             print("Passed an empty file")
     def find_max_words(self):
         """
@@ -188,7 +190,7 @@ class Operations(FileParser):
         try:
             assert self.__counter.most_common(1)[0][1] > 1
             print(f"{log_detail} {self.__counter.most_common(1)[0][0]}")
-        except AssertionError:
+        except AssertionError:#pragma: no cover
             print("All words are repeated exactly once, So maximum cannot be found")
 
     def palindrome(self):
@@ -205,8 +207,8 @@ class Operations(FileParser):
                 else:
                     flag += 1
             if flag == len(self.__list):
-                print("Null")
-        except AssertionError:
+                print("Null")#pragma: no cover
+        except AssertionError:#pragma: no cover
             print("Passed an empty file")
 
     def find_unique_list(self):
@@ -217,7 +219,7 @@ class Operations(FileParser):
         try:
             assert len(unique_list) > 0
             print(f"Unique elements in a list are: {unique_list}")
-        except AssertionError:
+        except AssertionError:#pragma: no cover
             print("No unique elements in the file")
     def word_dict(self):
         """
@@ -277,4 +279,4 @@ w.write_config()
 
 o = Operations()
 assert isinstance(o,Operations)
-o.printall()
+o.print_all()

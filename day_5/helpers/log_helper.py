@@ -13,7 +13,7 @@ class Logging:
         write_log(contents) : logging (writes the log to the logfile).
     """
     def __init__(self):
-        self.__log_dir = os.path.join(os.getcwd(),"fileparser.log")
+        self.__log_dir = os.path.join(os.getcwd(),"logs.log")
     def finish(self):
         """
         Logging Finished
@@ -26,9 +26,8 @@ class Logging:
         """
         logging.basicConfig(
             filename=self.__log_dir,
-            filemode='a+',
-            format='%(asctime)s - %(message)s',
+            filemode='w+',
+            format='%(asctime)s %(levelname)s - %(message)s',
             level=logging.DEBUG
         )
         logging.debug('%s',contents)
-        self.finish()

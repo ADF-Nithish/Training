@@ -252,11 +252,11 @@ class SqlConnector:
 s = SqlConnector()
 s.open_connection()
 s.create_table_request_info()
-s.create_table_response_info()
+# s.create_table_response_info()
 try:
     assert s.validate() is True
     s.insert_into_request_info()
 except AssertionError:
     pass
 
-s.insert_into_response_info(1,json.dumps(s.get_response()))
+# s.insert_into_response_info(1,json.dumps(s.get_response()))

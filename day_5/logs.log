@@ -1,5 +1,3 @@
-2021-06-28 12:47:53,567 DEBUG - Connection is successful.
-2021-06-28 12:47:53,583 DEBUG - Age Validation is Successful
-2021-06-28 12:47:53,599 DEBUG - User Repeated Validation Error
-2021-06-28 12:47:53,599 DEBUG - Validation Error...Check the Eligibility Criteria...
-2021-06-28 12:47:53,601 DEBUG - Inserted into the table response_info
+2021-06-28 17:02:30,334 DEBUG - Connection is successful.
+2021-06-28 17:02:30,380 DEBUG - Age Validation Error
+2021-06-28 17:02:30,380 DEBUG - Validation Error...Check the Eligibility Criteria...

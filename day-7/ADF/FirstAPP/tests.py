@@ -159,4 +159,42 @@ class TestModels(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'index.html')
     def test_view_post(self):
-        pass
+        url = reverse('RequestForm')
+        form = RequestInfoForm(
+            data={
+                'city':"Covai",
+                'date_of_birth': datetime.date(2000,1,18),
+                'first_name': "TestCase",
+                'last_name': "T",
+                'gender': "Male",
+                'nationality': "India",
+                'state': "Assam",
+                'pincode': 641004,
+                'qualification': "B.TECH",
+                'pan_number': "MMMMM",
+                'salary': 40000
+            }
+        )
+        response = self.client.post(url,form.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,'index.html')
+    def test_view_post_errors(self):
+        url = reverse('RequestForm')
+        form = RequestInfoForm(
+            data={
+                'city':"Covai",
+                'date_of_birth': datetime.date(2001,1,18),
+                'first_name': "TestCase",
+                'last_name': "T",
+                'gender': "Male",
+                'nationality': "India",
+                'state': "TamilNadu",
+                'pincode': 641004,
+                'qualification': "B.TECH",
+                'pan_number': "ERERE",
+                'salary': 4000
+            }
+        )
+        response = self.client.post(url,form.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,'failed.html')

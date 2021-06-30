@@ -7,7 +7,7 @@ from FirstAPP.models import Request_Info,Response_Info
 
 class FormView(generic.View):
     template_name = 'index.html'
-
+    redirect_template = 'failed.html'
     def get(self, request):
         form = RequestInfoForm()
         r = Request_Info.objects.all()
@@ -28,5 +28,6 @@ class FormView(generic.View):
             response_message = form.non_field_errors().as_data()[0]
             Response_Info.objects.create(response=
             str(response_message).strip('[]').strip('\'\''))
+            return render(request,self.redirect_template,context={'r':response_message})
         return render(request, self.template_name, context=context)
     

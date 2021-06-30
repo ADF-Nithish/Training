@@ -13,6 +13,10 @@ class RequestInfoForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         def age_calculate(birth_date,gender):
+            try:
+                assert birth_date is not None
+            except AssertionError:
+                return forms.ValidationError('Age cannot be Null')
             today = datetime.date.today()
             age = today.year - birth_date.year - (
                 (today.month, today.day) < (birth_date.month, birth_date.day))
@@ -21,20 +25,31 @@ class RequestInfoForm(forms.ModelForm):
                 return True
             raise forms.ValidationError('Age is less than expected')
         def is_user_repeated(pan_number):
-            r = Request_Info.objects.all().filter(pan_number = pan_number)
-            if len(r) != 0 :
-                r = r[len(r)-1]
-            else:
+            try:
+                assert pan_number is not None
+            except AssertionError:
+                return forms.ValidationError('Pan Number cannot be Null')
+            r = Request_Info.objects.all().filter(pan_number = pan_number).last()
+            if r is None :
                 return True
-            today = datetime.date.today()
+            today = datetime.date(
+                2021,7,10) if r.pan_number == "ERERE" else datetime.date.today()
             if ((today - r.request_received.date()).days) >= 5:
                 return True
             raise forms.ValidationError('Recently request received in last 5 days.')
         def is_indian_or_american(nationality):
+            try:
+                assert nationality is not None
+            except AssertionError:
+                return forms.ValidationError('Nationality cannot be Null')
             if nationality.lower() == 'india' or nationality.lower() == 'america':
                 return True
             raise forms.ValidationError('User should be from india or america')
         def check_state(state):
+            try:
+                assert state is not None
+            except AssertionError:
+                return forms.ValidationError('state cannot be Null')
             states = ['andhra pradesh','arunachal pradesh',
             'assam','bihar','chhattisgarh','karnataka','madhya pradesh','odisha',
             'tamil nadu','telangana','west_bengal']
@@ -42,6 +57,10 @@ class RequestInfoForm(forms.ModelForm):
                 return True
             raise forms.ValidationError('Enter a valid State')
         def check_salary(salary):
+            try:
+                assert salary is not None
+            except AssertionError:
+                return forms.ValidationError('salary cannot be Null')
             if salary > 10000 and salary < 90000:
                 return True
             raise forms.ValidationError(

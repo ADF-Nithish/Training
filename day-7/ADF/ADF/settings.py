@@ -84,6 +84,15 @@ DATABASES = {
         'OPTIONS': {
           'autocommit': True,
         },
+    },
+    'main': {
+        'NAME': 'finaladf',
+        'ENGINE': 'mysql.connector.django',
+        'USER': 'adf',
+        'PASSWORD': config('PASSWORD'),
+        'OPTIONS': {
+          'autocommit': True,
+        },
     }
 }
 

@@ -15,3 +15,11 @@ class Request_Info(models.Model):
     qualification = models.CharField(max_length=100)
     salary = models.IntegerField(null=True)
     pan_number = models.CharField(max_length=100)
+    def __str__(self):
+        return self.first_name
+    
+class Response_Info(models.Model):
+    id = models.AutoField(primary_key=True)
+    request_id = models.ForeignKey(Request_Info,models.DO_NOTHING,null=True)
+    response = models.CharField(max_length=200)
+    response_generated = models.DateTimeField(auto_now=True)
